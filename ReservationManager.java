@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 
 public class ReservationManager {
 
@@ -8,95 +8,161 @@ public class ReservationManager {
 
 	public void getCustomerInfo()
 	{
-		String fName, lName, email, phoneNumber;
-		
-		
+		//String fName, lName, email, phoneNumber;	
+		Customer newCustomer = new Customer();
+	
 		System.out.print("\nEnter first name of guest: ");
-		fName = IO.readString();
+		newCustomer.setFname(IO.readString());
 		/*if (ReservationManager.lookupResv(fName, resvs) != null) {
 			System.out.println("\nYou already have a reservation.");
 			return;
-		}*/
-				
+		}*/		
 		System.out.print("Enter last name: ");
-		lName = IO.readString();
+		newCustomer.setLname(IO.readString());
 		System.out.print("Enter your email address: ");
-		email = IO.readString();
+		newCustomer.setEmailAddress(IO.readString());
 		System.out.print("Enter your phone number: ");
-		phoneNumber = IO.readString();
-
-		Customer newCustomer = new Customer(fName, lName, phoneNumber, email);
-		//customer_details.add(newCustomer);
-		customer_details.add(newCustomer);
-		System.out.println(newCustomer.getInfo());
+		newCustomer.setPhoneNumber(IO.readInt());
+		
+		customer_details.add(newCustomer); // Adds new Customer object to list of customers
+		//System.out.println(customer_details);
 		System.out.println("customer added");	
+		
+		for (Customer printCusts : customer_details){
+			System.out.println(printCusts.getInfo());
+		}
+		
 	}
 	
-	static void createReservation(String email)
-	{
+	public void createReservation(String email){
+		Random r = new Random();
 		
-		Customer foundCustomer = null;
 		
-		for (Customer thisCust : customer_details) {
-			if(thisCust.getEmail().equalsIgnoreCase(email)){
-				foundCustomer = thisCust;
-			}
-			else if (foundCustomer == null){
-				System.out.println("Sorry, you must create a profile before placing a reservation.");
-				return;
-			}
-	
+		for(Customer x : customer_details){
+			if(x.getEmail().equalsIgnoreCase(email)){
+				System.out.println("Email Found");
 				
-			
-		
-		System.out.println("How many days will you be staying?");
-		int days = IO.readInt();
-		
-		System.out.println("Please select a room type (1.Single, 2.Double, 3.Suite): ");
-		int roomOption = IO.readInt();
-		
-		if(roomOption == 1){
-			Single s = new Single();
-			
-			System.out.println(foundCustomer.getInfo());
-			System.out.println(s.getInfo());
-			System.out.println(days);
-			
-			Reservation reserved = new Reservation(foundCustomer, s, days);
-			
-			
-			
-			reservation_list.add(reserved);
-			System.out.println(reserved.getInfo());
-		}
-		if(roomOption == 2){
-			Dbl d = new Dbl();
-			Reservation reserved = new Reservation(foundCustomer, d, days);
-			reservation_list.add(reserved);
-			System.out.println(reserved.getInfo());
-		}
-		if(roomOption == 3){
-			Suite st = new Suite();
-			Reservation reserved = new Reservation(foundCustomer, st, days);
-			reservation_list.add(reserved);
-			System.out.println(reserved.getInfo());
-			
-		}
+				System.out.println("How many days will you be staying?");
+				int days = IO.readInt();
+				
+				System.out.println("Please select a room type (1.Single, 2.Double, 3.Suite): ");
+				int roomOption = IO.readInt();
+				
+				if(roomOption == 1){
+					Single s = new Single();
+					
+					System.out.println(x.getInfo());
+					System.out.println(s.getInfo());
+					System.out.println(days);
+					
+					int resvId = r.nextInt(1000);
+					
+					Reservation reserved = new Reservation(x, s, days, resvId);
+					reservation_list.add(reserved);
+					System.out.println(reserved.getInfo());
+				}
+				if(roomOption == 2){
+					Dbl d = new Dbl();
+					int resvId = r.nextInt(1000);
+					
+					Reservation reserved = new Reservation(x, d, days, resvId);
+					reservation_list.add(reserved);
+					System.out.println(reserved.getInfo());
+				}
+				if(roomOption == 3){
+					Suite st = new Suite();
+					int resvId = r.nextInt(1000);
+					
+					Reservation reserved = new Reservation(x, st, days, resvId);
+					reservation_list.add(reserved);
+					System.out.println(reserved.getInfo());
+					
+				}
 
+			}
 		
-	}	
-		
-		
-		
-	
-	
-		
-		
+		}
 		
 	}
-
-}
 	
+
+	public void showCurrentProfile(String email){
+		for (Customer profile : customer_details)
+		{
+			if(profile.getEmail().equalsIgnoreCase(email))
+			{
+			System.out.println(profile.getInfo());
+			}
+		}
+	}
+
+	public void showCurrentReservation(String email){
+	
+		for (Reservation show : reservation_list)
+		{
+			if(show.getEmail().equalsIgnoreCase(email))
+			{
+				System.out.println("Email Found");
+				System.out.println(show.getInfo());
+			}
+		}		//System.out.println(reservation_list);
+	}
+
+
+	
+	public void changeReservation(int resvId) {
+		// TODO Auto-generated method stub	
+		for (Reservation change : reservation_list){
+			if(change.getResvId() == resvId)
+			{
+				
+				System.out.println("Current Reservation: ");
+				System.out.println("-------------------- ");
+				System.out.println(change.getRoom().getInfo());
+				System.out.println("-------------------- ");
+				System.out.println("");
+					
+				
+					System.out.println("Options: ");
+					System.out.println("1 - Change room type");
+					System.out.println("2 - Change days");
+					
+					System.out.print("\nEnter choice: ");
+					int choice = IO.readInt();
+					switch (choice) {
+
+					
+					case 1:
+						System.out.println("Please select a room type (1.Single, 2.Double, 3.Suite): ");
+						int roomOption = IO.readInt();
+							switch(roomOption){
+							
+							case 1: 
+								change.getRoom().setType("Single");
+								change.getRoom().setPrice(49.99);
+							}
+							
+						
+						
+					break; 
+					
+					case 2:
+				
+					break;
+				
+				
+					}
+			}
+		
+		}
+	
+	}
+		
+}
+
+
+
+
 	/*
 	static Room lookupResv(String name, ArrayList<Reservation> resvs)
 	{

@@ -15,6 +15,14 @@ public abstract class Room {
     public String getType() {
         return this.roomType;
     }
+    
+    public void setType(String tp) {
+    	this.roomType=tp;
+    }
+    
+    public void setPrice(double rp){
+    	this.roomPrice=rp; 
+    }
 
     public String getInfo() {
         String info = new String("    Rm. #: " + 

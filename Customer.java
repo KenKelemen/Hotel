@@ -3,18 +3,18 @@ public class Customer {
 
     protected String firstName;
     protected String lastName;
-    protected String phoneNumber;
+    protected int phoneNumber;
     private String email;
     
     public Customer() {
         this.firstName = null;
         this.lastName = null;
-        this.phoneNumber = null;
+        this.phoneNumber = 0;
         this.email = null;
     }
   
     
-    public Customer(String fName, String lName, String phNum, String mail){
+    public Customer(String fName, String lName, int phNum, String mail){
     	this.firstName=fName;
     	this.lastName=lName;
     	this.phoneNumber=phNum;
@@ -25,10 +25,10 @@ public class Customer {
     @Override
 	public String toString()
     {
-	return ("barcode: "+ this.firstName +","+
-            " item: "+ this.lastName +","+
-            " cost: "+ "$"+ this.phoneNumber +","+
-            " category: " + this.email);
+	return (" FirstName: "+ this.firstName +","+
+            " \n LastName: "+ this.lastName +","+
+            " \n Phone: "+ "$"+ this.phoneNumber +","+
+            " \n Email: " + this.email);
 	}
 	
     public String getInfo() {
@@ -46,7 +46,7 @@ public class Customer {
         return this.lastName;
     }
     
-    public String getPhoneNumber() {
+    public int getPhoneNumber() {
         return this.phoneNumber;
     }
     
@@ -62,7 +62,7 @@ public class Customer {
     	this.lastName = ln;
     }
     
-    public void setPhoneNumber(String n) {
+    public void setPhoneNumber(int n) {
         this.phoneNumber = n;
     }
     
